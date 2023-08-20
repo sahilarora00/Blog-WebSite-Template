@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot</title>
+  <style>
+    .chat-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    .message {
+      margin-bottom: 10px;
+    }
+
+    .user-message {
+      color: #0066FF;
+    }
+
+    .bot-message {
+      color: #333333;
+    }
+  </style>
+</head>
+<body>
+    <div id="chat-container">
+      <div id="chat-log"></div>
+      <div id="user-input">
+        <input type="text" id="message-input" placeholder="Type your message">
+        <button id="send-button">Send</button>
+      </div>
+    </div>
+  
+    <script>
+      // Get elements
+      const chatLog = document.getElementById('chat-log');
+      const messageInput = document.getElementById('message-input');
+      const sendButton = document.getElementById('send-button');
+  
+      // Event listener for send button click
+      sendButton.addEventListener('click', sendMessage);
+  
+      // Event listener for enter key press
+      messageInput.addEventListener('keyup', function (event) {
+        if (event.keyCode === 13) {
+          sendMessage();
+        }
+      });
+  
+      // Send user message and handle reply
+      function sendMessage() {
+        const userMessage = messageInput.value;
+        appendMessage('You: ' + userMessage);
+        messageInput.value = '';
+  
+        // Simulate reply/answer
+        setTimeout(function () {
+          const reply = generateReply(userMessage);
+          appendMessage('Bot: ' + reply);
+        }, 1000);
+      }
+  
+      // Generate a random reply/answer
+      function generateReply(userMessage) {
+        const answers = {
+          'hello': 'Hello!',
+          'how are you': 'I am fine, thank you!',
+          'what is your name': 'My name is Chat Bot.',
+          'goodbye': 'Goodbye!',
+          // Add more question-answer pairs as needed
+        };
+  
+        const lowercaseMessage = userMessage.toLowerCase();
+        for (const question in answers) {
+          if (lowercaseMessage.includes(question)) {
+            return answers[question];
+          }
+        }
+  
+        // If no matching question found, return a default reply
+        //return 'I'm sorry, I don't understand. Can you please rephrase your question?';
+      }
+  
+      // Append a message to the chat log
+      function appendMessage(message) {
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message;
+        chatLog.appendChild(messageElement);
+      }
+    </script>
+  </body>
+</html>
